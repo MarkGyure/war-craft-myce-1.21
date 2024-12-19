@@ -1,0 +1,41 @@
+{
+	"schemaVersion": 1,
+	"id": "warcraft",
+	"version": "${version}",
+	"name": "War Craft",
+	"description": "This is a passion project mod about making the ultimate immersive Minecraft war experience.",
+	"authors": [
+		"Mark",
+		"Bryce"
+	],
+	"contact": {
+		"homepage": "https://fabricmc.net/",
+		"sources": "https://github.com/FabricMC/fabric-example-mod"
+	},
+	"license": "CC0-1.0",
+	"icon": "assets/warcraft/icon.png",
+	"environment": "*",
+	"entrypoints": {
+		"main": [
+			"net.myce.warcraft.WarCraft"
+		],
+		"fabric-datagen": [
+			"net.myce.warcraft.WarCraftDataGenerator"
+		],
+		"client": [
+			"net.myce.warcraft.WarCraftClient"
+		]
+	},
+	"mixins": [
+		"warcraft.mixins.json"
+	],
+	"depends": {
+		"fabricloader": ">=0.16.9",
+		"minecraft": "~1.21",
+		"java": ">=21",
+		"fabric-api": "*"
+	},
+	"suggests": {
+		"another-mod": "*"
+	}
+}
