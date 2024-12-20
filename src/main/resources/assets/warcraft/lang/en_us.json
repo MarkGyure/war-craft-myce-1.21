@@ -6,5 +6,7 @@
 
   "itemgroup.warcraft.war_craft_items": "War Craft",
 
-  "block.warcraft.claim_stone.tooltip": "ONCE THIS IS PLACED IT CAN NOT BE PICKED UP."
+  "block.warcraft.claim_stone.tooltip": "ONCE THIS IS PLACED IT CAN NOT BE PICKED UP.",
+
+  "block.warcraft.claim_stone.out_of_range": "Claim Stone can only be placed from y 63-75."
 }
