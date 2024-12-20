@@ -2,23 +2,25 @@ package net.myce.warcraft;
 
 import net.fabricmc.api.ModInitializer;
 
+import net.myce.warcraft.block.ModBlocks;
+import net.myce.warcraft.item.ModItemGroups;
+import net.myce.warcraft.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+// Very important comment
 public class WarCraft implements ModInitializer {
 	public static final String MOD_ID = "warcraft";
-
-	// This logger is used to write text to the console and the log file.
-	// It is considered best practice to use your mod id as the logger's name.
-	// That way, it's clear which mod wrote info, warnings, and errors.
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
 	@Override
-	public void onInitialize() {
-		// This code runs as soon as Minecraft is in a mod-load-ready state.
-		// However, some things (like resources) may still be uninitialized.
-		// Proceed with mild caution.
+	public void onInitialize()
+	{
+		ModItemGroups.registerItemGroups();
 
-		LOGGER.info("Hello Fabric world!");
+		ModBlocks.registerModBlocks();
+		ModItems.registerModItems();
 	}
 }
+
+// I love Bryce Evan Harbison
