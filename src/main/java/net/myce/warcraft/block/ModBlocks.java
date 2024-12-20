@@ -45,7 +45,7 @@ public class ModBlocks {
                     int y = pos.getY();
 
                     // Check if it's within the allowed Y-range (60 to 75)
-                    if (y < 60 || y > 75) {
+                    if (y < 63 || y > 75) {
                         // If not, send a message to the player who is trying to place the block
                         if (world instanceof ServerWorld) { // Ensure we're on the server side
                             ServerWorld serverWorld = (ServerWorld) world;
