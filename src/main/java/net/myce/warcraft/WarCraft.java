@@ -39,7 +39,6 @@ public class WarCraft implements ModInitializer {
 
 				serverState.totalDirtBlocksBroken += 1;
 
-
 				MinecraftServer server = world.getServer();
 
 				PacketByteBuf data = PacketByteBufs.create();
@@ -48,7 +47,7 @@ public class WarCraft implements ModInitializer {
 				ServerPlayerEntity playerEntity = server.getPlayerManager().getPlayer(player.getUuid());
 
 				server.execute(() -> {
-					ServerPlayNetworking.send(playerEntity, new Payload(totalDirtBlocksBroken));
+					ServerPlayNetworking.send(playerEntity, new Payload(serverState.totalDirtBlocksBroken));
 				});
 			}
 		});
