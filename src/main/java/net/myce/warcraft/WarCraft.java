@@ -24,7 +24,6 @@ public class WarCraft implements ModInitializer {
 	public void onInitialize()
 	{
 		ModItemGroups.registerItemGroups();
-
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
 		ClaimStoneChunkHandler.register();
