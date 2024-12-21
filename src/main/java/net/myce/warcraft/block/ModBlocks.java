@@ -30,7 +30,9 @@ import java.util.List;
 
 public class ModBlocks {
 
-    public static final Block CLAIM_STONE = registerBlock("claim_stone",
+
+    //Block List
+    public static final Block CLAIM_STONE = registerToolTipBlock("claim_stone",
             new Block(AbstractBlock.Settings.create()
                     .strength(5f)
                     .sounds(BlockSoundGroup.LODESTONE)
@@ -64,15 +66,41 @@ public class ModBlocks {
             },
             "block.warcraft.claim_stone.tooltip"); // Tooltip key
 
-    private static Block registerBlock(String name, Block block, @Nullable String tooltipKey) {
-        registerBlockItem(name, block, tooltipKey);
+    public static final Block MINT_PRESS = registerBlock("mint_press",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(2.5f)
+                    .sounds(BlockSoundGroup.ANVIL)
+                    .dropsNothing() //this needs to change
+                    .mapColor(MapColor.BLACK)));
+
+
+
+
+
+
+
+    //Tool Tip Block Register
+    private static Block registerToolTipBlock(String name, Block block, @Nullable String tooltipKey) {
+        registerToolTipBlockItem(name, block, tooltipKey);
         return Registry.register(Registries.BLOCK, Identifier.of(WarCraft.MOD_ID, name), block);
     }
-
-    private static void registerBlockItem(String name, Block block, @Nullable String tooltipKey) {
+    // Block Register
+    private static Block registerBlock(String name, Block block) {
+        registerBlockItem(name, block);
+        return Registry.register(Registries.BLOCK, Identifier.of(WarCraft.MOD_ID, name), block);
+    }
+    //Block Item Registry
+    private static void registerBlockItem(String name, Block block) {
         Registry.register(Registries.ITEM, Identifier.of(WarCraft.MOD_ID, name),
                 new BlockItem(block, new Item.Settings()) {
-            // Adds custom tooltip
+
+                });
+    }
+    // Tool Tip Block Registry
+    private static void registerToolTipBlockItem(String name, Block block, @Nullable String tooltipKey) {
+        Registry.register(Registries.ITEM, Identifier.of(WarCraft.MOD_ID, name),
+                new BlockItem(block, new Item.Settings()) {
+                    // Adds custom tooltip
                     @Override
                     public void appendTooltip(ItemStack stack, Item.TooltipContext context, List<Text> tooltip, TooltipType type) {
                         if (tooltipKey != null) {
