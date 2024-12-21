@@ -11,7 +11,6 @@ import net.myce.warcraft.item.ModItemGroups;
 import net.myce.warcraft.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import net.myce.warcraft.client.render.MintPressRenderer;
 
 
 import static net.minecraft.server.command.CommandManager.argument;
@@ -75,11 +74,6 @@ public class WarCraft implements ModInitializer {
 
 							return 3;
 						})));
-		registerBlockRenderers();
 	}
 
-	private void registerBlockRenderers() {
-		// Register the MintPress block renderer with the renderer class
-		GeoBlockRenderer.registerBlockRenderer(ModBlocks.MINT_PRESS, MintPressRenderer.class);
-	}
 }

@@ -28,7 +28,7 @@ fabricApi {
 }
 
 dependencies {
-	modImplementation "software.bernie.geckolib:geckolib-fabric-1.21:4.5+"
+	modImplementation "software.bernie.geckolib:geckolib-fabric-${minecraft_version}:${geckolib_version}"
 	// To change the versions see the gradle.properties file
 	minecraft "com.mojang:minecraft:${project.minecraft_version}"
 	mappings "net.fabricmc:yarn:${project.yarn_mappings}:v2"
