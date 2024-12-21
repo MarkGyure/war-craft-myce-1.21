@@ -6,6 +6,7 @@ import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.minecraft.text.Text;
 import net.myce.warcraft.block.ModBlocks;
+import net.myce.warcraft.events.ClaimStoneChunkHandler;
 import net.myce.warcraft.item.ModItemGroups;
 import net.myce.warcraft.item.ModItems;
 import org.slf4j.Logger;
@@ -26,6 +27,7 @@ public class WarCraft implements ModInitializer {
 
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
+		ClaimStoneChunkHandler.register();
 
 		PayloadTypeRegistry.playS2C().register(Payload.ID, Payload.CODEC);
 
