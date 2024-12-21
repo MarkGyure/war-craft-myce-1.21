@@ -30,9 +30,7 @@ import java.util.List;
 
 public class ModBlocks {
 
-
-    //Block List
-    public static final Block CLAIM_STONE = registerToolTipBlock("claim_stone",
+    public static final Block CLAIM_STONE = registerBlock("claim_stone",
             new Block(AbstractBlock.Settings.create()
                     .strength(5f)
                     .sounds(BlockSoundGroup.LODESTONE)
@@ -46,7 +44,7 @@ public class ModBlocks {
                     // Get the Y-coordinate of the position
                     int y = pos.getY();
 
-                    // Check if it's within the allowed Y-range (60 to 75)
+                    // Check if it's within the allowed Y-range (63 to 75)
                     if (y < 63 || y > 75) {
                         // If not, send a message to the player who is trying to place the block
                         if (world instanceof ServerWorld) { // Ensure we're on the server side
@@ -66,6 +64,46 @@ public class ModBlocks {
             },
             "block.warcraft.claim_stone.tooltip"); // Tooltip key
 
+
+
+    public static final Block TEAM_BLOCK = registerBlock("team_block",
+            new Block(AbstractBlock.Settings.create()
+                    .strength(5f)
+                    .sounds(BlockSoundGroup.GLASS)
+                    .luminance(state -> 100)
+                    .dropsNothing()
+                    .mapColor(MapColor.PURPLE))
+            {
+                //Stops the block from being placed in between specific y level and sends message if not
+                @Override
+                public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
+                    // Get the Y-coordinate of the position
+                    int y = pos.getY();
+
+                    // Check if it's within the allowed Y-range (63 to 75)
+                    if (y < 63 || y > 75) {
+                        // If not, send a message to the player who is trying to place the block
+                        if (world instanceof ServerWorld) { // Ensure we're on the server side
+                            ServerWorld serverWorld = (ServerWorld) world;
+                            serverWorld.getPlayers().forEach(player -> {
+                                if (player instanceof PlayerEntity) {
+                                    // Send a message to the player
+                                    player.sendMessage(Text.translatable("block.warcraft.claim_stone.out_of_range").formatted(Formatting.RED), false);
+                                }
+                            });
+                        }
+                        return false; // Prevent placement
+                    }
+                    // Allow placement if in the correct range
+                    return super.canPlaceAt(state, world, pos);
+                }
+            },
+            "block.warcraft.claim_stone.tooltip"); // Tooltip key
+
+
+
+    private static Block registerBlock(String name, Block block, @Nullable String tooltipKey) {
+        registerBlockItem(name, block, tooltipKey);
     public static final Block MINT_PRESS = registerBlock("mint_press",
             new Block(AbstractBlock.Settings.create()
                     .strength(2.5f)
