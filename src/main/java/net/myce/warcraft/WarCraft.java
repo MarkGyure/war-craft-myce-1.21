@@ -1,27 +1,23 @@
 package net.myce.warcraft;
 
+import com.mojang.brigadier.arguments.StringArgumentType;
 import net.fabricmc.api.ModInitializer;
-
-import net.fabricmc.fabric.api.event.player.PlayerBlockBreakEvents;
-import net.fabricmc.fabric.api.networking.v1.PacketByteBufs;
+import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
-import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
-import net.minecraft.block.Blocks;
-import net.minecraft.network.PacketByteBuf;
-import net.minecraft.server.MinecraftServer;
-import net.minecraft.server.network.ServerPlayerEntity;
+import net.minecraft.text.Text;
 import net.myce.warcraft.block.ModBlocks;
 import net.myce.warcraft.item.ModItemGroups;
 import net.myce.warcraft.item.ModItems;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
+import static net.minecraft.server.command.CommandManager.argument;
+import static net.minecraft.server.command.CommandManager.literal;
+
 public class WarCraft implements ModInitializer {
 	public static final String MOD_ID = "warcraft";
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
-
-	private Integer totalDirtBlocksBroken = 0;
 
 	@Override
 	public void onInitialize()
@@ -33,23 +29,48 @@ public class WarCraft implements ModInitializer {
 
 		PayloadTypeRegistry.playS2C().register(Payload.ID, Payload.CODEC);
 
-		PlayerBlockBreakEvents.AFTER.register((world, player, pos, state, entity) -> {
-			if (state.getBlock() == Blocks.GRASS_BLOCK || state.getBlock() == Blocks.DIRT) {
-				StateSaverAndLoader serverState = StateSaverAndLoader.getServerState(world.getServer());
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+				dispatcher.register(literal("createfaction") //phrase/word used to call command
+					.then(argument("name", StringArgumentType.string()) //creates the argument that asks for the name of the faction
+							.executes(context ->
+							{
+								final String name = StringArgumentType.getString(context, "name"); //creates a string that gets the argument
 
-				serverState.totalDirtBlocksBroken += 1;
+								StateSaverAndLoader serverState = StateSaverAndLoader.getServerState(context.getSource().getServer());
+								PlayerData playerData = StateSaverAndLoader.getPlayerState(context.getSource().getPlayer());
 
-				MinecraftServer server = world.getServer();
+								playerData.factionName = name;
+								serverState.factionList.add(name);
 
-				PacketByteBuf data = PacketByteBufs.create();
-				data.writeInt(serverState.totalDirtBlocksBroken);
+								context.getSource().sendFeedback(() -> Text.literal("Your faction " + name + " is created."), false);
 
-				ServerPlayerEntity playerEntity = server.getPlayerManager().getPlayer(player.getUuid());
+								return 1;
+							}))));
 
-				server.execute(() -> {
-					ServerPlayNetworking.send(playerEntity, new Payload(serverState.totalDirtBlocksBroken));
-				});
-			}
-		});
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+				dispatcher.register(literal("factioninfo")
+						.executes(context ->
+						{
+							PlayerData playerData = StateSaverAndLoader.getPlayerState(context.getSource().getPlayer());
+
+							context.getSource().sendFeedback(() -> Text.literal(playerData.factionName), false);
+
+							return 2;
+						})));
+
+		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
+				dispatcher.register(literal("factionlist")
+						.executes(context ->
+						{
+							StateSaverAndLoader serverState = StateSaverAndLoader.getServerState(context.getSource().getServer());
+
+							for(int i = 0; i < serverState.factionList.size(); i++)
+							{
+								int index = i;
+								context.getSource().sendFeedback(() -> Text.literal(serverState.factionList.get(index)), false);
+							}
+
+							return 3;
+						})));
 	}
 }
