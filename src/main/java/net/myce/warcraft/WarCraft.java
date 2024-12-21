@@ -11,6 +11,7 @@ import net.minecraft.network.PacketByteBuf;
 import net.minecraft.server.MinecraftServer;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.myce.warcraft.block.ModBlocks;
+import net.myce.warcraft.events.ClaimStoneChunkHandler;
 import net.myce.warcraft.item.ModItemGroups;
 import net.myce.warcraft.item.ModItems;
 import org.slf4j.Logger;
@@ -30,6 +31,7 @@ public class WarCraft implements ModInitializer {
 
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
+		ClaimStoneChunkHandler.register();
 
 		PayloadTypeRegistry.playS2C().register(Payload.ID, Payload.CODEC);
 
