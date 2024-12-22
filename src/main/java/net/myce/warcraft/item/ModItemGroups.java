@@ -18,6 +18,7 @@ public class ModItemGroups {
                     .entries((displayContext, entries) -> {
                         entries.add(ModItems.WEALTH);
                         entries.add(ModBlocks.CLAIM_STONE);
+                        entries.add(ModBlocks.MINT_PRESS);
                     }).build());
 
 
