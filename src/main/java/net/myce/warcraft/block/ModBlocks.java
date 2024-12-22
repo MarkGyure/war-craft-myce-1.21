@@ -30,14 +30,13 @@ import java.util.List;
 
 public class ModBlocks {
 
-    public static final Block CLAIM_STONE = registerBlock("claim_stone",
+    public static final Block CLAIM_STONE = registerToolTipBlock("claim_stone",
             new Block(AbstractBlock.Settings.create()
                     .strength(5f)
                     .sounds(BlockSoundGroup.LODESTONE)
                     .luminance(state -> 15)
                     .dropsNothing()
-                    .mapColor(MapColor.PURPLE))
-            {
+                    .mapColor(MapColor.PURPLE)) {
                 //Stops the block from being placed in between specific y level and sends message if not
                 @Override
                 public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
@@ -65,15 +64,13 @@ public class ModBlocks {
             "block.warcraft.claim_stone.tooltip"); // Tooltip key
 
 
-
-    public static final Block TEAM_BLOCK = registerBlock("team_block",
+    public static final Block TEAM_BLOCK = registerToolTipBlock("team_block",
             new Block(AbstractBlock.Settings.create()
                     .strength(5f)
                     .sounds(BlockSoundGroup.GLASS)
                     .luminance(state -> 100)
                     .dropsNothing()
-                    .mapColor(MapColor.PURPLE))
-            {
+                    .mapColor(MapColor.PURPLE)) {
                 //Stops the block from being placed in between specific y level and sends message if not
                 @Override
                 public boolean canPlaceAt(BlockState state, WorldView world, BlockPos pos) {
@@ -101,15 +98,12 @@ public class ModBlocks {
             "block.warcraft.claim_stone.tooltip"); // Tooltip key
 
 
-
-    private static Block registerBlock(String name, Block block, @Nullable String tooltipKey) {
-        registerBlockItem(name, block, tooltipKey);
     public static final Block MINT_PRESS = registerBlock("mint_press",
-            new Block(AbstractBlock.Settings.create()
-                    .strength(2.5f)
-                    .sounds(BlockSoundGroup.ANVIL)
-                    .dropsNothing() //this needs to change
-                    .mapColor(MapColor.BLACK)));
+                new Block(AbstractBlock.Settings.create()
+                        .strength(2.5f)
+                        .sounds(BlockSoundGroup.ANVIL)
+                        .dropsNothing() //this needs to change
+                        .mapColor(MapColor.BLACK)));
 
 
 
@@ -117,25 +111,13 @@ public class ModBlocks {
 
 
 
-    //Tool Tip Block Register
-    private static Block registerToolTipBlock(String name, Block block, @Nullable String tooltipKey) {
-        registerToolTipBlockItem(name, block, tooltipKey);
-        return Registry.register(Registries.BLOCK, Identifier.of(WarCraft.MOD_ID, name), block);
-    }
-    // Block Register
-    private static Block registerBlock(String name, Block block) {
-        registerBlockItem(name, block);
-        return Registry.register(Registries.BLOCK, Identifier.of(WarCraft.MOD_ID, name), block);
-    }
-    //Block Item Registry
-    private static void registerBlockItem(String name, Block block) {
-        Registry.register(Registries.ITEM, Identifier.of(WarCraft.MOD_ID, name),
-                new BlockItem(block, new Item.Settings()) {
-
-                });
-    }
-    // Tool Tip Block Registry
-    private static void registerToolTipBlockItem(String name, Block block, @Nullable String tooltipKey) {
+        // Tool Tip Block Registery
+        private static Block registerToolTipBlock (String name, Block block, @Nullable String tooltipKey){
+            registerToolTipBlockItem(name, block, tooltipKey);
+            return Registry.register(Registries.BLOCK, Identifier.of(WarCraft.MOD_ID, name), block);
+        }
+        // Tool Tip Block Item Registry
+        private static void registerToolTipBlockItem (String name, Block block, @Nullable String tooltipKey){
         Registry.register(Registries.ITEM, Identifier.of(WarCraft.MOD_ID, name),
                 new BlockItem(block, new Item.Settings()) {
                     // Adds custom tooltip
@@ -146,16 +128,28 @@ public class ModBlocks {
                         }
                     }
                 });
+        }
+        // Block Registery
+        private static Block registerBlock (String name, Block block){
+            registerBlockItem(name, block);
+            return Registry.register(Registries.BLOCK, Identifier.of(WarCraft.MOD_ID, name), block);
+        }
+        // Block Item Registry
+        private static void registerBlockItem (String name, Block block) {
+            Registry.register(Registries.ITEM, Identifier.of(WarCraft.MOD_ID, name),
+                    new BlockItem(block, new Item.Settings()) {});
+        }
+
+
+
+        public static void registerModBlocks() {
+            WarCraft.LOGGER.info("Registering Mod Blocks for " + WarCraft.MOD_ID);
+            ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
+                entries.add(ModBlocks.CLAIM_STONE);
+                entries.add(ModBlocks.TEAM_BLOCK);
+                entries.add(ModBlocks.MINT_PRESS);
+            });
+        }
     }
 
 
-
-
-    public static void registerModBlocks() {
-        WarCraft.LOGGER.info("Registering Mod Blocks for " + WarCraft.MOD_ID);
-
-        ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
-            entries.add(ModBlocks.CLAIM_STONE);
-        });
-    }
-}
