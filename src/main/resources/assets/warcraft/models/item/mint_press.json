@@ -1,5 +1,5 @@
 {
-    "parent": "minecraft:item/generated",
+    "parent": "warcraft:block/mint_press",
     "textures": {
         "layer0": "warcraft:block/mint_press"
     }
