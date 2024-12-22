@@ -17,8 +17,7 @@ public class WarCraftClient implements ClientModInitializer
 
             client.execute(() ->
             {
-                context.player().sendMessage(Text.literal("Total dirt blocks broken: " + payload.blocksBroken()));
-                context.player().sendMessage(Text.literal("Your faction is: " + payload.factionName()));
+                context.player().sendMessage(Text.literal(payload.username() + " would like to join your faction."));
             });
         });
     }
