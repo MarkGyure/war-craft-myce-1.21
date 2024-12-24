@@ -1,18 +1,15 @@
 package net.myce.warcraft.block;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.minecraft.block.BlockState;
-import net.minecraft.block.MapColor;
+import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
+import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.tooltip.TooltipType;
 import net.minecraft.server.world.ServerWorld;
 import net.minecraft.sound.BlockSoundGroup;
 import net.minecraft.util.math.BlockPos;
-import net.minecraft.world.BlockView;
 import net.minecraft.world.WorldView;
 import net.myce.warcraft.WarCraft;
-import net.minecraft.block.AbstractBlock;
-import net.minecraft.block.Block;
 import net.minecraft.item.BlockItem;
 import net.minecraft.item.Item;
 import net.minecraft.item.ItemGroups;
@@ -22,7 +19,6 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Formatting;
-import net.minecraft.world.World;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -98,20 +94,18 @@ public class ModBlocks {
             "block.warcraft.claim_stone.tooltip"); // Tooltip key
 
 
-    public static final Block MINT_PRESS = registerBlock("mint_press",
+   /* public static final Block MINT_PRESS = registerBlock("mint_press",
                 new Block(AbstractBlock.Settings.create()
                         .strength(2.5f)
                         .sounds(BlockSoundGroup.ANVIL)
                         .dropsNothing() //this needs to change
-                        .mapColor(MapColor.BLACK)));
+                        .mapColor(MapColor.BLACK))
+
+    );*/
 
 
 
-
-
-
-
-        // Tool Tip Block Registery
+    // Tool Tip Block Registery
         private static Block registerToolTipBlock (String name, Block block, @Nullable String tooltipKey){
             registerToolTipBlockItem(name, block, tooltipKey);
             return Registry.register(Registries.BLOCK, Identifier.of(WarCraft.MOD_ID, name), block);
@@ -147,7 +141,6 @@ public class ModBlocks {
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
                 entries.add(ModBlocks.CLAIM_STONE);
                 entries.add(ModBlocks.TEAM_BLOCK);
-                entries.add(ModBlocks.MINT_PRESS);
             });
         }
     }

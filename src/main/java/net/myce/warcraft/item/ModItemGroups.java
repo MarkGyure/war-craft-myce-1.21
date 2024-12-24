@@ -2,6 +2,7 @@ package net.myce.warcraft.item;
 
 import net.fabricmc.fabric.api.itemgroup.v1.FabricItemGroup;
 import net.myce.warcraft.WarCraft;
+import net.myce.warcraft.block.ExampleInventoryBlock;
 import net.myce.warcraft.block.ModBlocks;
 import net.minecraft.item.ItemGroup;
 import net.minecraft.item.ItemStack;
@@ -18,8 +19,8 @@ public class ModItemGroups {
                     .entries((displayContext, entries) -> {
                         entries.add(ModItems.WEALTH);
                         entries.add(ModBlocks.CLAIM_STONE);
-                        entries.add(ModBlocks.MINT_PRESS);
                         entries.add(ModBlocks.TEAM_BLOCK);
+                        
                     }).build());
 
 

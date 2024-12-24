@@ -5,10 +5,14 @@ import net.fabricmc.api.ModInitializer;
 import net.fabricmc.fabric.api.command.v2.CommandRegistrationCallback;
 import net.fabricmc.fabric.api.networking.v1.PayloadTypeRegistry;
 import net.fabricmc.fabric.api.networking.v1.ServerPlayNetworking;
+import net.fabricmc.fabric.api.transfer.v1.item.ItemStorage;
 import net.minecraft.server.network.ServerPlayerEntity;
 import net.minecraft.text.Text;
+import net.minecraft.util.Identifier;
 import net.myce.warcraft.block.ModBlocks;
+import net.myce.warcraft.block.entity.ExampleInventoryBlockEntity;
 import net.myce.warcraft.events.ClaimStoneChunkHandler;
+import net.myce.warcraft.init.BlockEntityTypeInit;
 import net.myce.warcraft.item.ModItemGroups;
 import net.myce.warcraft.item.ModItems;
 import org.slf4j.Logger;
@@ -25,6 +29,7 @@ public class WarCraft implements ModInitializer {
 
 	public static final Logger LOGGER = LoggerFactory.getLogger(MOD_ID);
 
+
 	@Override
 	public void onInitialize()
 	{
@@ -32,6 +37,15 @@ public class WarCraft implements ModInitializer {
 		ModBlocks.registerModBlocks();
 		ModItems.registerModItems();
 		ClaimStoneChunkHandler.register();
+
+
+		BlockEntityTypeInit.load();
+
+
+		ItemStorage.SIDED.registerForBlockEntity(ExampleInventoryBlockEntity::getInventoryProvider, BlockEntityTypeInit.EXAMPLE_INVENTORY_BLOCK_ENTITY);
+
+
+
 
 		PayloadTypeRegistry.playS2C().register(Payload.ID, Payload.CODEC);
 
@@ -129,6 +143,9 @@ public class WarCraft implements ModInitializer {
 
 							return 1;
 						})));
+	}
+	public static Identifier id(String path) {
+		return Identifier.of(MOD_ID, path);
 	}
 
 }
