@@ -1,14 +1,13 @@
 package net.myce.warcraft.init;
 
-
 import net.minecraft.item.*;
 import net.minecraft.registry.Registries;
 import net.minecraft.registry.Registry;
 import net.myce.warcraft.WarCraft;
-
 import java.util.ArrayList;
 import java.util.List;
 
+// Same as Block and BlockEntity Init
 public class ItemInit {
     public static final List<ItemConvertible> BLACKLIST = new ArrayList<>();
 

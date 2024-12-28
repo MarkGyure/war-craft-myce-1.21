@@ -15,5 +15,8 @@
   "block.warcraft.claim_stone.tooltip": "ONCE THIS IS PLACED IT CAN NOT BE PICKED UP.",
 
   "_comment": "COMMENT: Custom Chat Messages",
-  "block.warcraft.claim_stone.out_of_range": "Claim Stone can only be placed from y 63-75."
+  "block.warcraft.claim_stone.out_of_range": "Claim Stone can only be placed from y 63-75.",
+
+
+  "block.myce.warcraft.mint_press": " "
 }

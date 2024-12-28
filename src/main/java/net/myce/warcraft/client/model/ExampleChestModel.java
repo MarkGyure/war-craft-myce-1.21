@@ -8,6 +8,8 @@ import net.minecraft.client.util.math.MatrixStack;
 import net.minecraft.util.Identifier;
 import net.myce.warcraft.WarCraft;
 
+// Class for example chest model. we arent making a model we have one from block bench, we dont need this class aswell
+//but im scare of deleting stuff rn so we will do it later if we need.
 public class ExampleChestModel extends Model {
     public static final EntityModelLayer LAYER_LOCATION = new EntityModelLayer(WarCraft.id("example_chest"), "main");
     public static final Identifier TEXTURE_LOCATION = WarCraft.id("textures/entity/example_chest.png");
@@ -52,12 +54,10 @@ public class ExampleChestModel extends Model {
                 ModelTransform.pivot(0.0F, 4.5F, 6.0F));
         return TexturedModelData.of(modelData, 64, 64);
     }
-
     @Override
     public void render(MatrixStack matrices, VertexConsumer vertexConsumer, int light, int overlay, int color) {
         this.main.render(matrices, vertexConsumer, light, overlay, color);
     }
-
     public ModelPart getLid() {
         return this.lid;
     }

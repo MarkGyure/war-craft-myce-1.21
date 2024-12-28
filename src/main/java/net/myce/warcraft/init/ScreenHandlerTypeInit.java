@@ -12,6 +12,7 @@ import net.myce.warcraft.WarCraft;
 import net.myce.warcraft.network.BlockPosPayload;
 import net.myce.warcraft.screenhandler.ExampleInventoryScreenHandler;
 
+// Same as Block, BlockEntity Init, and Item Init
 public class ScreenHandlerTypeInit {
     public static final ScreenHandlerType<ExampleInventoryScreenHandler> EXAMPLE_INVENTORY_SCREEN_HANDLER =
             register("example_inventory", ExampleInventoryScreenHandler::new, BlockPosPayload.PACKET_CODEC);

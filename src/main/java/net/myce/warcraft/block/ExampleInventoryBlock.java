@@ -1,6 +1,5 @@
 package net.myce.warcraft.block;
 
-
 import net.minecraft.block.*;
 import net.minecraft.block.entity.BlockEntity;
 import net.minecraft.entity.player.PlayerEntity;
@@ -21,10 +20,10 @@ import net.minecraft.world.World;
 import net.myce.warcraft.block.entity.ExampleInventoryBlockEntity;
 import net.myce.warcraft.init.BlockEntityTypeInit;
 import org.jetbrains.annotations.Nullable;
-
 import java.util.HashMap;
 import java.util.Map;
 
+// Class for the example block. basically just the Mint Press block except un finished and we dont actually need it
 public class ExampleInventoryBlock extends Block implements BlockEntityProvider {
     private static final VoxelShape DEFAULT_SHAPE = VoxelShapes.union(
             VoxelShapes.cuboid(0.125, 0, 0.125, 0.875, 0.5625, 0.875),
@@ -32,9 +31,7 @@ public class ExampleInventoryBlock extends Block implements BlockEntityProvider 
             VoxelShapes.cuboid(0.4375, 0.4375, 0.0625, 0.5625, 0.625, 0.125)
     ).simplify();
     private static final Map<Direction, VoxelShape> SHAPES = new HashMap<>();
-
     public static final DirectionProperty FACING = Properties.HORIZONTAL_FACING;
-
     public ExampleInventoryBlock(Settings settings) {
         super(settings);
         setDefaultState(getDefaultState().with(FACING, Direction.NORTH));
@@ -43,10 +40,8 @@ public class ExampleInventoryBlock extends Block implements BlockEntityProvider 
             SHAPES.put(direction, calculateShapes(direction, DEFAULT_SHAPE));
         }
     }
-
     private static VoxelShape calculateShapes(Direction to, VoxelShape shape) {
         final VoxelShape[] buffer = {shape, VoxelShapes.empty()};
-
         final int times = (to.getHorizontal() - Direction.NORTH.getHorizontal() + 4) % 4;
         for (int i = 0; i < times; i++) {
             buffer[0].forEachBox((minX, minY, minZ, maxX, maxY, maxZ) ->
@@ -55,7 +50,6 @@ public class ExampleInventoryBlock extends Block implements BlockEntityProvider 
             buffer[0] = buffer[1];
             buffer[1] = VoxelShapes.empty();
         }
-
         return buffer[0];
     }
 
@@ -64,9 +58,9 @@ public class ExampleInventoryBlock extends Block implements BlockEntityProvider 
         if(!world.isClient) {
             if(world.getBlockEntity(pos) instanceof ExampleInventoryBlockEntity inventoryBlockEntity) {
                 player.openHandledScreen(inventoryBlockEntity);
+                System.out.println("Example blok Opened");
             }
         }
-
         return ActionResult.success(world.isClient);
     }
 

@@ -1,7 +1,6 @@
 package net.myce.warcraft.block;
 
 import net.fabricmc.fabric.api.itemgroup.v1.ItemGroupEvents;
-import net.fabricmc.fabric.api.object.builder.v1.block.FabricBlockSettings;
 import net.minecraft.block.*;
 import net.minecraft.entity.player.PlayerEntity;
 import net.minecraft.item.tooltip.TooltipType;
@@ -19,6 +18,7 @@ import net.minecraft.registry.Registry;
 import net.minecraft.text.Text;
 import net.minecraft.util.Identifier;
 import net.minecraft.util.Formatting;
+import net.myce.warcraft.block.custom.MintPressBlock;
 import org.jetbrains.annotations.Nullable;
 
 
@@ -59,7 +59,6 @@ public class ModBlocks {
             },
             "block.warcraft.claim_stone.tooltip"); // Tooltip key
 
-
     public static final Block TEAM_BLOCK = registerToolTipBlock("team_block",
             new Block(AbstractBlock.Settings.create()
                     .strength(5f)
@@ -93,15 +92,12 @@ public class ModBlocks {
             },
             "block.warcraft.claim_stone.tooltip"); // Tooltip key
 
-
-   /* public static final Block MINT_PRESS = registerBlock("mint_press",
-                new Block(AbstractBlock.Settings.create()
-                        .strength(2.5f)
-                        .sounds(BlockSoundGroup.ANVIL)
-                        .dropsNothing() //this needs to change
-                        .mapColor(MapColor.BLACK))
-
-    );*/
+    public static final Block MINT_PRESS = registerBlock("mint_press",
+            new MintPressBlock(AbstractBlock.Settings.create()
+                    .strength(2f)
+                    .sounds(BlockSoundGroup.ANVIL)
+                    .mapColor(MapColor.BLACK))
+    );
 
 
 
@@ -133,14 +129,12 @@ public class ModBlocks {
             Registry.register(Registries.ITEM, Identifier.of(WarCraft.MOD_ID, name),
                     new BlockItem(block, new Item.Settings()) {});
         }
-
-
-
         public static void registerModBlocks() {
             WarCraft.LOGGER.info("Registering Mod Blocks for " + WarCraft.MOD_ID);
             ItemGroupEvents.modifyEntriesEvent(ItemGroups.BUILDING_BLOCKS).register(entries -> {
                 entries.add(ModBlocks.CLAIM_STONE);
                 entries.add(ModBlocks.TEAM_BLOCK);
+                entries.add(ModBlocks.MINT_PRESS);
             });
         }
     }

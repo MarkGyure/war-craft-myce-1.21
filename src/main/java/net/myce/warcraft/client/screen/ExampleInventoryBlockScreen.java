@@ -1,6 +1,5 @@
 package net.myce.warcraft.client.screen;
 
-
 import net.minecraft.client.gui.DrawContext;
 import net.minecraft.client.gui.screen.ingame.HandledScreen;
 import net.minecraft.entity.player.PlayerInventory;
@@ -9,6 +8,8 @@ import net.minecraft.util.Identifier;
 import net.myce.warcraft.WarCraft;
 import net.myce.warcraft.screenhandler.ExampleInventoryScreenHandler;
 
+// Needed for actually drawing the screen that you see when u right click MintPressBlock. Idk how these methods work
+//but they seem pretty straight forward..
 public class ExampleInventoryBlockScreen extends HandledScreen<ExampleInventoryScreenHandler> {
     private static final Identifier TEXTURE = WarCraft.id("textures/gui/container/example_inventory_block.png");
 

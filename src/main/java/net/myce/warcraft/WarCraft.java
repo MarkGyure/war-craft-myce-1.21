@@ -44,9 +44,6 @@ public class WarCraft implements ModInitializer {
 
 		ItemStorage.SIDED.registerForBlockEntity(ExampleInventoryBlockEntity::getInventoryProvider, BlockEntityTypeInit.EXAMPLE_INVENTORY_BLOCK_ENTITY);
 
-
-
-
 		PayloadTypeRegistry.playS2C().register(Payload.ID, Payload.CODEC);
 
 		CommandRegistrationCallback.EVENT.register((dispatcher, registryAccess, environment) ->
