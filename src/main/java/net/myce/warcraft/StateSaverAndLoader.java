@@ -13,11 +13,10 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.UUID;
 
-//Bryce Harbison
-
 public class StateSaverAndLoader extends PersistentState
 {
     public List<String> factionList = new ArrayList<>();
+
     public HashMap<UUID, PlayerData> players = new HashMap<>();
 
     @Override
@@ -25,6 +24,7 @@ public class StateSaverAndLoader extends PersistentState
     {
         //this method creates the NbtCompounds that stores the data which is to be remembered, aka our list of factions and who is in what faction
         NbtCompound nbtFactionList = new NbtCompound();
+
         NbtCompound playersNbt = new NbtCompound();
 
         //goes through each index in factionlist to get the name of each faction
@@ -46,6 +46,7 @@ public class StateSaverAndLoader extends PersistentState
             }
         }
 
+
         //goes through each "player" in the players hashmap
         players.forEach((uuid, playerData) ->
         {
@@ -53,7 +54,12 @@ public class StateSaverAndLoader extends PersistentState
             NbtCompound playerCompound = new NbtCompound();
 
             //puts the name of the faction this player is in into the compound
+            playerCompound.putString("username", playerData.username);
             playerCompound.putString("factionName", playerData.factionName);
+            playerCompound.putBoolean("factionLeader", playerData.factionLeader);
+            playerCompound.putUuid("incomingRequestOne", playerData.incomingRequestOne);
+            playerCompound.putUuid("incomingRequestTwo", playerData.incomingRequestTwo);
+            playerCompound.putUuid("incomingRequestThree", playerData.incomingRequestThree);
 
             //puts the specific compound into the larger compound that houses EVERY player's data
             playersNbt.put(uuid.toString(), playerCompound);
@@ -92,7 +98,12 @@ public class StateSaverAndLoader extends PersistentState
             PlayerData playerData = new PlayerData();
 
             //sets the player's faction by getting it from its specific compound
+            playerData.username = playersNbt.getCompound(key).getString("username");
             playerData.factionName = playersNbt.getCompound(key).getString("factionName");
+            playerData.factionLeader = playersNbt.getCompound(key).getBoolean("factionLeader");
+            playerData.incomingRequestOne = playersNbt.getCompound(key).getUuid("incomingRequestOne");
+            playerData.incomingRequestTwo = playersNbt.getCompound(key).getUuid("incomingRequestTwo");
+            playerData.incomingRequestThree = playersNbt.getCompound(key).getUuid("incomingRequestThree");
 
             //gets the players uuid (universally unique identifier)
             UUID uuid = UUID.fromString(key);
@@ -104,7 +115,9 @@ public class StateSaverAndLoader extends PersistentState
         return state;
     }
 
-    public static PlayerData getPlayerState(LivingEntity player) {
+    public static PlayerData getPlayerState(LivingEntity player)
+    {
+
         StateSaverAndLoader serverState = getServerState(player.getWorld().getServer());
 
         //either get the player by the uuid, or we don't have data for him yet, make a new player state
